@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">incomeControl</string>
+    <string name="txt_correo">Correo </string>
+    <string name="txt_clave">Clave </string>
+    <string name="btn_iniciar">Iniciar </string>
+    <string name="Registrarme">Registrarme </string>
+    <string name="Olvidaste">¿Olvidaste tu clave? </string>
+    <string name="Usuario">Usuario </string>
+    <string name="Registrarse">Registrarse </string>
+    <string name="documento">Documento</string>
+    <string name="documento_t">Documento </string>
+    <string name="nombre">Nombre</string>
+    <string name="info">Ingrese la siguente información para poder acceder a las funcionalidades de IncomeControl. Tenga en cuenta que todos los campos son abligatorios </string>
+    <string name="nombre_completo">Digite el nombre completo </string>
+    <string name="correo">Correo </string>
+    <string name="diew_email">El correo sera el usuario con el cual inicie sesión</string>
+    <string name="documento_cc">Digite su cedula de ciudadania</string>
+    <string name="registrarme">Registrarme</string>
+    <string name="entrada">Entrada</string>
+    <string name="salida">Salida</string>
+    <string name="escanear">Escanear</string>
+    <string name="cerrar">Cerrar Sesión</string>
+    <string name="escan_code">Escanear Codigo</string>
+    <string name="celular">Celular</string>
+    <string name="dig_cel">Digite su numero de celular</string>
+    <string name="aco">¿Tienes acompañante?</string>
+    <string name="cuantos">¿Cuantos?</string>
+
+</resources>
