@@ -32,3 +32,10 @@
 -keep class com.android.volley.toolbox.ImageLoader$* { *; }
 -keep interface com.android.volley.** { *; }
 -keep class org.apache.commons.logging.*
+
+# To make right deserialization
+-keepclassmembers class ** {
+  @com.some.package.server.JsonDeserializerWithOptions$FieldRequired public *;
+}
+-keep @interface com.some.package.server.JsonDeserializerWithOptions$FieldRequired
+-keep class com.some.package.server.JsonDeserializerWithOptions
