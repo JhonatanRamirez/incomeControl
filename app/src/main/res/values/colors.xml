@@ -2,14 +2,14 @@
 <resources>
 
 
-    <color name="colorPrimary">#e05c74</color>
-    <color name="colorPrimaryDark">#dc476c</color>
-    <color name="colorPrimaryLigth">#e4637c</color>
+    <color name="colorPrimary">#FF9800</color>
+    <color name="colorPrimaryDark">#F57C00</color>
+    <color name="colorPrimaryLigth">#FFE0B2</color>
     <color name="verde_ingreso">  #c8e6c9</color>
 
 
     <color name="colorFontLigth">#ede7f6</color>
-    <color name="colorAccent">#03A9F4</color>
+    <color name="colorAccent">#FF5722</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>

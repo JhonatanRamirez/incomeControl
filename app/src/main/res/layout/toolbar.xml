@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/color_white"
+
     android:theme="@style/GalaxyZooThemeToolbarDarkOverflow"
-    android:elevation="4dp">
+    android:elevation="0dp">
 
 </androidx.appcompat.widget.Toolbar>

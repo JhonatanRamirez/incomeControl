@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">incomeControl</string>
+    <string name="app_name">VenturaApp</string>
     <string name="txt_correo">Correo </string>
     <string name="txt_clave">Clave </string>
     <string name="btn_iniciar">Iniciar </string>

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.incomecontrol.menu;
 import com.example.incomecontrol.registroUsuario;
@@ -14,13 +15,15 @@ import com.example.incomecontrol.registroUsuario;
 public class MiContador extends CountDownTimer implements View.OnClickListener {
 
     LinearLayout mostrar;
-    ImageView close;
+      ImageView close;
 
-    public MiContador(long millisInFuture, long countDownInterval, View vista, View pub) {
+    public MiContador(long millisInFuture, long countDownInterval, View vista, View pub ) {
         super(millisInFuture, countDownInterval);
+
         mostrar= (LinearLayout) vista;
         close= (ImageView) pub;
         close.setOnClickListener(this);
+
     }
 
     @Override
@@ -46,6 +49,10 @@ public class MiContador extends CountDownTimer implements View.OnClickListener {
         if(v== close){
             mostrar.setVisibility(View.VISIBLE);
             close.setVisibility(View.GONE);
+
+
+
         }
     }
+
 }

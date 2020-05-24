@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,6 +36,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.incomecontrol.temporizador.MiContador;
+import com.example.incomecontrol.temporizador.animationCheckCancell;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -49,19 +52,28 @@ import java.util.Map;
 
 public class menu extends AppCompatActivity implements View.OnClickListener {
 
-   private Toolbar toolbar;
+    private static final String TAG = "menu";
+    private Toolbar toolbar;
    private ImageView codQr;
    private TextView txtQr;
    private String resultQr;
    private String id_user="";
    private LinearLayout linearQr;
    private ImageView imgPublicidad;
+   private LottieAnimationView qr_animation;
+    private LottieAnimationView check_animation;
+    private LottieAnimationView cancell_animation;
+   private Button btn_scan;
+   private String id_local;
+   private IntentIntegrator intentIntegrator;
 
    private StringRequest stringRequest;
     private JsonArrayRequest jsonArrayRequest;
    private RequestQueue request;
-   private Switch acom;
    private LinearLayout acomp;
+    private LinearLayout linear_qrchi;
+    private LinearLayout linear_check;
+    private LinearLayout linear_cancel;
    private EditText txt_acomp;
    private Date d;
    private Timestamp ts;
@@ -74,16 +86,21 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         toolbar=findViewById(R.id.toolbar);
         codQr=findViewById(R.id.img_qr);
         txtQr=findViewById(R.id.txt_qr);
-        acom=findViewById(R.id.switch_a);
         acomp=findViewById(R.id.linear_acom);
         txt_acomp=findViewById(R.id.txt_acomp);
         linearQr=findViewById(R.id.linearQr);
+        linear_qrchi=findViewById(R.id.linear_qrchi);
+        linear_check=findViewById(R.id.linear_check);
+        linear_cancel=findViewById(R.id.linear_cancel);
         imgPublicidad=findViewById(R.id.imgPublicidad);
+        qr_animation=findViewById(R.id.animation_lottie_qr);
+        btn_scan=findViewById(R.id.btn_scanQr);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.color_white));
         toolbar.setTitle("Escanear Codigo");
         setSupportActionBar(toolbar);
         codQr.setOnClickListener(this);
-        acom.setOnClickListener(this);
+        qr_animation.setOnClickListener(this);
+        btn_scan.setOnClickListener(this);
         this.request= Volley.newRequestQueue(this);
 
 
@@ -113,16 +130,22 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         if(v==codQr){
 
-            new IntentIntegrator(menu.this).initiateScan();
-        }else if( v== acom){
+            intentIntegrator=   new IntentIntegrator(menu.this);
+            intentIntegrator.setTimeout();
+            intentIntegrator.setOrientationLocked(false);
+            intentIntegrator.initiateScan();
+        }else if (v==qr_animation){
 
-            if(acom.isChecked()){
-                acomp.setVisibility(View.VISIBLE);
+            intentIntegrator=   new IntentIntegrator(menu.this);
+            intentIntegrator.setOrientationLocked(false);
 
-            }else{
-                acomp.setVisibility(View.GONE);
-            }
+            intentIntegrator.initiateScan();
 
+        }else if (v== btn_scan){
+
+            intentIntegrator=   new IntentIntegrator(menu.this);
+            intentIntegrator.setOrientationLocked(false);
+            intentIntegrator.initiateScan();
         }
 
     }
@@ -134,7 +157,8 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         if(result!=null){
             if(result.getContents()!=null){
                 resultQr=result.getContents();
-                guardarBD();
+                traeridLocal();
+
 
             }else{
                 Toast.makeText(menu.this, "Error al escanear", Toast.LENGTH_LONG).show();
@@ -143,10 +167,48 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void traeridLocal() {
+
+        Log.e(TAG, "traeridLocal: Qr: "+resultQr );
+        Log.e("Entro", "Guardar en Bd");
+        String url="http://app.dasscol.com/WebService/modelo/getLocalId.php?id="+resultQr;
+        jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.e("Entro", "response en Bd");
+                if(response.length()>0){
+
+                    try {
+
+                        id_local=  response.getJSONObject(response.length()-1).get("id").toString();
+                        guardarBD();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                    Toast.makeText(getApplicationContext(), "EL local no existe", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("Volley Error",""+ error);
+
+                Toast.makeText(menu.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        request.add(jsonArrayRequest);
+    }
+
     private void guardarBD() {
 
         Log.e("Entro", "Guardar en Bd");
-        String url="http://covid19.dasscol.com/WebService/modelo/getEventId.php?id="+id_user;
+        String url="http://app.dasscol.com/WebService/modelo/getEventId.php?id="+id_user;
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -157,9 +219,20 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                     try {
 
                         String tipo=  response.getJSONObject(response.length()-1).get("tipo").toString();
+                        String id_localActual=response.getJSONObject(response.length()-1).get("id_entradas").toString();
                        if(tipo.equalsIgnoreCase("Entrada")){
-                           guardarBD2("Salida");
+                           if(id_localActual.equalsIgnoreCase(id_local)){
+                               guardarBD2("Salida");
+                           }else{
+
+                               final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_cancel, linear_qrchi);
+                               animation.start();
+                               Toast.makeText(menu.this, "Local salida no coincide con local de ingreso", Toast.LENGTH_LONG).show();
+                           }
+
                        }else{
+
+
                            guardarBD2("Entrada");
                        }
 
@@ -187,17 +260,21 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     }
 
      private void guardarBD2(final String tipo2){
-         String url="http://covid19.dasscol.com/WebService/modelo/setEvents.php?";
-         final ProgressDialog loading = ProgressDialog.show(this, "Registrando Persona...", "Espere por favor");
+         String url="http://app.dasscol.com/WebService/modelo/setEvents.php?";
+         final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
 
          this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
              @Override
              public void onResponse(String response) {
                  Log.e("response", ""+response);
                  Toast.makeText(menu.this, "Registro de "+tipo2+" se realizo con exito", Toast.LENGTH_LONG).show();
+
                  if(tipo2.equalsIgnoreCase("Entrada")){
                      final MiContador timer = new MiContador(5000,1000,linearQr, imgPublicidad);
                      timer.start();
+                 }else{
+                     final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_check, linear_qrchi);
+                     animation.start();
                  }
 
                  loading.dismiss();
@@ -220,7 +297,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                  d = new Date();
                  ts = new Timestamp(d.getTime());
                  Map<String,String> parametros= new HashMap<>();
-                 parametros.put("entrada",resultQr);
+                 parametros.put("entrada",id_local);
                  parametros.put("id_user",id_user);
                  parametros.put("tipo",tipo2);
                  parametros.put("fecha",ts.toString());
@@ -234,16 +311,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
 
     private String traerAcompanante() {
 
-        if(acom.isChecked()){
-            if(!(txt_acomp.getText().toString().equalsIgnoreCase(""))){
-
-                return txt_acomp.getText().toString();
-            }else{
-                return "0";
-            }
-        }else{
-          return "0";
-        }
+    return "0";
 
     }
 

@@ -88,7 +88,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
     }
 
     private void guardarBD() {
-        String url="http://covid19.dasscol.com/WebService/modelo/setUsuario.php?";
+        String url="http://app.dasscol.com/WebService/modelo/setUsuario.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Registrando Persona...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -129,7 +129,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
 
     private void getIdUser() {
 
-        String url="http://covid19.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

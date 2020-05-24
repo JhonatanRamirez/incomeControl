@@ -74,7 +74,7 @@
         <item name="actionMenuTextColor">@color/color_white</item>
         <!-- android:textColorSecondary is the color of the menu
              overflow icon (three vertical dots) -->
-        <item name="android:textColorSecondary">@color/color_white</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
 
         <!-- This would set the toolbar's background color,
               but setting this also changes the popup menu's background,

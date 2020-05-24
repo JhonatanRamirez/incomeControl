@@ -9,8 +9,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,7 +24,7 @@
                 android:layout_width="140dp"
                 android:layout_height="212dp"
                 android:layout_gravity="right"
-                android:src="@drawable/hexagone1" />
+                android:src="@drawable/superior" />
 
 
             <ImageView
@@ -34,7 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="120dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/hexagone2" />
+                android:src="@drawable/inferior" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -129,7 +127,6 @@
                         android:layout_height="wrap_content"
                         android:textSize="15sp"
                         android:textColorHint="#ffffff"
-                        android:maxLength="10"
                         app:drawable_hide="@drawable/hide1"
                         app:drawable_show="@drawable/show"
                         android:textCursorDrawable="@drawable/white_cursor_color"

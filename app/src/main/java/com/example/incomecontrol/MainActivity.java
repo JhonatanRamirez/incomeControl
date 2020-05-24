@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         clave= findViewById(R.id.password);
         netx= findViewById(R.id.img_netx);
         request= Volley.newRequestQueue(this);
-
-
         registarme.setOnClickListener(this);
         netx.setOnClickListener(this);
     }
@@ -105,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void traerUsuario() {
 
 
-        String url="http://covid19.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
+        String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
