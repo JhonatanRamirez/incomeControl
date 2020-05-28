@@ -131,19 +131,23 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         if(v==codQr){
 
             intentIntegrator=   new IntentIntegrator(menu.this);
-            intentIntegrator.setTimeout();
+           // intentIntegrator.setTimeout(8000);
+            intentIntegrator.setPrompt("Escanea el código");
             intentIntegrator.setOrientationLocked(false);
             intentIntegrator.initiateScan();
         }else if (v==qr_animation){
 
             intentIntegrator=   new IntentIntegrator(menu.this);
+        //   intentIntegrator.setTimeout(8000);
+            intentIntegrator.setPrompt("Escanea el código");
             intentIntegrator.setOrientationLocked(false);
-
             intentIntegrator.initiateScan();
 
         }else if (v== btn_scan){
 
             intentIntegrator=   new IntentIntegrator(menu.this);
+          //  intentIntegrator.setTimeout(8000);
+            intentIntegrator.setPrompt("Escanea el código");
             intentIntegrator.setOrientationLocked(false);
             intentIntegrator.initiateScan();
         }
@@ -187,7 +191,8 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                         e.printStackTrace();
                     }
                 }else{
-
+                    final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_cancel, linear_qrchi);
+                    animation.start();
                     Toast.makeText(getApplicationContext(), "EL local no existe", Toast.LENGTH_LONG).show();
                 }
 
