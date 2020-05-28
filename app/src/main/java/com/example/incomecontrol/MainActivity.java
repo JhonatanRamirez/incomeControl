@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String id;
     private JsonArrayRequest jsonArrayRequest;
     private RequestQueue request;
+    private static final String TAG = "MainActivity";
 
 
     @Override
@@ -101,8 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void traerUsuario() {
-
-
         String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -152,6 +151,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             finish();
 
         }else{
+            Log.e(TAG, "validarUser: "+" clave U "+claveU+ " clave "+clave.getText().toString() );
             Toast.makeText(MainActivity.this, "Clave incorrecta", Toast.LENGTH_LONG).show();
 
         }

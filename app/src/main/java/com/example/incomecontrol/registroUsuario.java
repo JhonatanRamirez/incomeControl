@@ -63,10 +63,8 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         if(v==registro){
             if(validarCampos()){
                 //Se debe hacer la validacion de que el correo no exista en la base de datos
-                guardarBD();
-                Intent i = new Intent(registroUsuario.this, menu.class);
-                startActivity(i);
-                finish();
+                emailNoExiste();
+
             }else{
                 Toast.makeText(registroUsuario.this, "Debe registrar todos los datos", Toast.LENGTH_LONG).show();
             }
@@ -74,7 +72,34 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void emailNoExiste() {
 
+        String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                if(response.length()>0){
+                    Toast.makeText(registroUsuario.this, "El correo ya se encuentra registrado en la base de datos.", Toast.LENGTH_LONG).show();
+                }else{
+                    guardarBD();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("Volley Error",""+ error);
+
+                Toast.makeText(registroUsuario.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        request.add(jsonArrayRequest);
+
+
+    }
 
     private boolean validarCampos() {
 
