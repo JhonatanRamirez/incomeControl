@@ -83,7 +83,7 @@
                 app:lottie_autoPlay="true"/>
 
 
-            <com.example.incomecontrol.customfonts.MyTextView_Poppins_SemiBold
+            <com.App.incomecontrol.customfonts.MyTextView_Poppins_SemiBold
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_qr"

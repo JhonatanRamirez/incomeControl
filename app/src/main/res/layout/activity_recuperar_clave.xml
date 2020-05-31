@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/rec_clave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Recuperar Clave"
+            android:textSize="28dp"
+            android:textColorHint="@color/color_gris90"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:background="@drawable/camp_text2"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_email"
+                android:layout_marginLeft="5dp"
+                />
+
+
+            <EditText
+                android:id="@+id/txt_correo"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="@string/correo"
+                android:inputType="textAutoComplete"
+                android:textColorHint="@color/color_gris60"
+                android:background="@drawable/camp_text3"
+                android:textColor="@color/color_black"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/lbl_adv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Por favor ingrese el correo electronico"
+            android:textSize="10dp"
+            android:textColorHint="@color/color_black"
+            android:layout_marginBottom="15dp"
+            android:textAlignment="center" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_siguiente"
+                android:text="siguiente"
+                android:background="@drawable/estilo_boton"
+                android:textColor="@color/color_white"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

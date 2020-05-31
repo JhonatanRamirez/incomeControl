@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">AccesControl</string>
+    <string name="app_name">VenturaApp</string>
     <string name="txt_correo">Correo </string>
     <string name="txt_clave">Clave </string>
+    <string name="txt_claverep">Repetir clave </string>
     <string name="btn_iniciar">Iniciar </string>
     <string name="Registrarme">Registrarme </string>
     <string name="Olvidaste">¿Olvidaste tu clave? </string>
