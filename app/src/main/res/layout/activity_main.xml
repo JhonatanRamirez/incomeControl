@@ -8,32 +8,25 @@
     android:background="#f2f2f3"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/imghexagon"
                 android:layout_width="140dp"
                 android:layout_height="212dp"
                 android:layout_gravity="right"
                 android:src="@drawable/superior" />
-
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="120dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/inferior" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -42,8 +35,6 @@
                 android:layout_marginLeft="36dp"
                 android:layout_marginBottom="90dp"
                 android:orientation="vertical">
-
-
                 <com.App.incomecontrol.customfonts.MyTextView_Poppins_SemiBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +43,6 @@
                     android:layout_gravity="left"
                     android:textColor="#fefefe"
                     android:textSize="31.3sp" />
-
                 <com.App.incomecontrol.customfonts.MyTextView_Poppins_Regular
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

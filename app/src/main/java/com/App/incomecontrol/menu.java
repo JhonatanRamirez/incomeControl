@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,7 +35,6 @@ import com.App.incomecontrol.temporizador.MiContador;
 import com.App.incomecontrol.temporizador.animationCheckCancell;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -57,8 +55,6 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
    private LinearLayout linearQr;
    private ImageView imgPublicidad;
    private LottieAnimationView qr_animation;
-    private LottieAnimationView check_animation;
-    private LottieAnimationView cancell_animation;
    private Button btn_scan;
    private String id_local;
    private IntentIntegrator intentIntegrator;
@@ -99,12 +95,10 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         btn_scan.setOnClickListener(this);
         this.request= Volley.newRequestQueue(this);
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_settings, menu);
         return super.onCreateOptionsMenu(menu);
@@ -112,27 +106,20 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         if(item.getItemId()==R.id.cerrar_sesion){
-
             borrarPreferencias();
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-
     @Override
     public void onClick(View v) {
         if(v==codQr){
-
             intentIntegrator=   new IntentIntegrator(menu.this);
            // intentIntegrator.setTimeout(8000);
             intentIntegrator.setPrompt("Escanea el código");
             intentIntegrator.setOrientationLocked(false);
             intentIntegrator.initiateScan();
         }else if (v==qr_animation){
-
             intentIntegrator=   new IntentIntegrator(menu.this);
         //   intentIntegrator.setTimeout(8000);
             intentIntegrator.setPrompt("Escanea el código");
@@ -140,14 +127,12 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
             intentIntegrator.initiateScan();
 
         }else if (v== btn_scan){
-
             intentIntegrator=   new IntentIntegrator(menu.this);
           //  intentIntegrator.setTimeout(8000);
             intentIntegrator.setPrompt("Escanea el código");
             intentIntegrator.setOrientationLocked(false);
             intentIntegrator.initiateScan();
         }
-
     }
 
     @Override
@@ -176,12 +161,9 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
             public void onResponse(JSONArray response) {
                 Log.e("Entro", "response en Bd");
                 if(response.length()>0){
-
                     try {
-
                         id_local=  response.getJSONObject(response.length()-1).get("id").toString();
                         guardarBD();
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -195,47 +177,36 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Log.e("Volley Error",""+ error);
-
                 Toast.makeText(menu.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
-
             }
         });
         request.add(jsonArrayRequest);
     }
 
     private void guardarBD() {
-
-        Log.e("Entro", "Guardar en Bd");
         String url="http://app.dasscol.com/WebService/modelo/getEventId.php?id="+id_user;
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.e("Entro", "response en Bd");
                 if(response.length()>0){
-
                     Log.e("Entro", "response mayor a 0");
                     try {
-
                         String tipo=  response.getJSONObject(response.length()-1).get("tipo").toString();
                         String id_localActual=response.getJSONObject(response.length()-1).get("id_entradas").toString();
                        if(tipo.equalsIgnoreCase("Entrada")){
                            if(id_localActual.equalsIgnoreCase(id_local)){
                                guardarBD2("Salida");
                            }else{
-
+                               marcarSalida("Salida", id_localActual);
                                final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_cancel, linear_qrchi);
                                animation.start();
                                Toast.makeText(menu.this, "Local salida no coincide con local de ingreso", Toast.LENGTH_LONG).show();
                            }
-
                        }else{
-
-
                            guardarBD2("Entrada");
                        }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -243,23 +214,61 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                     Log.e("Entro", "response menor a 0");
                     guardarBD2("Entrada");
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Log.e("Volley Error",""+ error);
-
                 Toast.makeText(menu.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
-
             }
         });
         request.add(jsonArrayRequest);
 
     }
 
-     private void guardarBD2(final String tipo2){
+    private void marcarSalida(String salida, final String id_localActual) {
+        String url="http://app.dasscol.com/WebService/modelo/setEvents.php?";
+        final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
+
+        this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("response", ""+response);
+                Toast.makeText(menu.this, "Registro de "+"Salida"+" se realizo con exito", Toast.LENGTH_LONG).show();
+
+                    final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_check, linear_qrchi);
+                    animation.start();
+                loading.dismiss();
+
+                guardarBD2("Entrada");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Error", "Este es el error "+ error);
+                loading.dismiss();
+            }
+        }
+
+        ){
+            @Override
+            protected Map<String,String> getParams() throws AuthFailureError {
+                d = new Date();
+                ts = new Timestamp(d.getTime());
+                Map<String,String> parametros= new HashMap<>();
+                parametros.put("entrada",id_localActual);
+                parametros.put("id_user",id_user);
+                parametros.put("tipo","Salida");
+                parametros.put("fecha",ts.toString());
+                parametros.put("acom",traerAcompanante());
+                return parametros;
+            }
+        };
+
+        request.add(stringRequest);
+    }
+
+    private void guardarBD2(final String tipo2){
          String url="http://app.dasscol.com/WebService/modelo/setEvents.php?";
          final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
 
@@ -280,8 +289,6 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                  loading.dismiss();
              }
          }, new Response.ErrorListener() {
-
-
              @Override
              public void onErrorResponse(VolleyError error) {
                  Log.e("Error", "Este es el error "+ error);

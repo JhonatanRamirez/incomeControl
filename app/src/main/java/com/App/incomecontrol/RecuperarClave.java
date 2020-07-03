@@ -118,14 +118,12 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                                 finish();
-
                             }
                         })
                         .show();
 
             }
         }, new Response.ErrorListener() {
-
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -135,7 +133,6 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
         }
 
         ){
-
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
 
@@ -152,8 +149,6 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
                 parametros.put("email",email);
                 parametros.put("asunto",asunto);
                 parametros.put("mensaje",mensaje);
-
-
                 return parametros;
             }
         };
