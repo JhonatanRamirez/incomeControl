@@ -8,32 +8,25 @@
     android:background="#f2f2f3"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/imghexagon"
                 android:layout_width="140dp"
                 android:layout_height="212dp"
                 android:layout_gravity="right"
                 android:src="@drawable/superior" />
-
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="120dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/inferior" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -42,9 +35,7 @@
                 android:layout_marginLeft="36dp"
                 android:layout_marginBottom="90dp"
                 android:orientation="vertical">
-
-
-                <com.example.incomecontrol.customfonts.MyTextView_Poppins_SemiBold
+                <com.App.incomecontrol.customfonts.MyTextView_Poppins_SemiBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left"
@@ -52,8 +43,7 @@
                     android:layout_gravity="left"
                     android:textColor="#fefefe"
                     android:textSize="31.3sp" />
-
-                <com.example.incomecontrol.customfonts.MyTextView_Poppins_Regular
+                <com.App.incomecontrol.customfonts.MyTextView_Poppins_Regular
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="13.3sp"
@@ -63,7 +53,7 @@
                     android:text="Email"
                     />
 
-                <com.example.incomecontrol.customfonts.EditText_Poppins_Semi_Bold
+                <com.App.incomecontrol.customfonts.EditText_Poppins_Semi_Bold
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,7 +77,7 @@
                     android:background="#f2f2f3"/>
 
 
-                <com.example.incomecontrol.customfonts.MyTextView_Poppins_Regular
+                <com.App.incomecontrol.customfonts.MyTextView_Poppins_Regular
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="13.3sp"
@@ -144,7 +134,7 @@
                     android:background="#f2f2f3"/>
 
 
-                <com.example.incomecontrol.customfonts.MyTextView_Poppins_Regular
+                <com.App.incomecontrol.customfonts.MyTextView_Poppins_Regular
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_olvidaste_clave"
@@ -154,7 +144,7 @@
                     android:layout_marginTop="17.3dp"
                     android:text="¿Olvidaste tu clave?"
                     />
-                <com.example.incomecontrol.customfonts.MyTextView_Poppins_Regular
+                <com.App.incomecontrol.customfonts.MyTextView_Poppins_Regular
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/txt_registrate"
