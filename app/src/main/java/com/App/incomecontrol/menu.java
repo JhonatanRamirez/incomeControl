@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,9 +36,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +55,6 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
    private Button btn_scan;
    private String id_local;
    private IntentIntegrator intentIntegrator;
-
    private StringRequest stringRequest;
     private JsonArrayRequest jsonArrayRequest;
    private RequestQueue request;
