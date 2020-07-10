@@ -50,7 +50,6 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
             }else{
                 Toast.makeText(RecuperarClave.this, "Email invalido, intente nuevamente.", Toast.LENGTH_LONG).show();
             }
-
         }
     }
 
@@ -63,7 +62,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
 
     private void consultarCorreo() {
 
-        String url="http://app.dasscol.co/WebService/modelo/getUsuario_correo.php?correo="+txt_correo.getText().toString();
+        String url="https://app.dasscol.co/WebService/modelo/getUsuario_correo.php?correo="+txt_correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -84,9 +83,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Log.e("Volley Error",""+ error);
-
                 Toast.makeText(RecuperarClave.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
 
             }
@@ -97,7 +94,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
     private void enviarEmail(final JSONArray response2) {
 
 
-        String url="http://app.dasscol.co/WebService/modelo/sendEmail.php?";
+        String url="https://app.dasscol.co/WebService/modelo/sendEmail.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Un momento...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

@@ -180,7 +180,6 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         }
 
         ){
-
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
 
