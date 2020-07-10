@@ -100,19 +100,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      finish();
 
  }
-
     }
 
     private void traerUsuario() {
-        String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
+        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
                 if(response.length()>0){
-
                     try {
-
                         usuario= response.getJSONObject(0).get("correo").toString();
                         claveU=response.getJSONObject(0).get("clave").toString();
                         documento= response.getJSONObject(0).get("documento").toString();
@@ -134,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("Volley Error",""+ error);
-
                 Toast.makeText(MainActivity.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
 
             }

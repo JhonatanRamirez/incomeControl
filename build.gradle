@@ -8,6 +8,7 @@ buildscript {
         mavenLocal()
         maven {
             url "https://jitpack.io"
+
         }
     }
     dependencies {
@@ -26,6 +27,7 @@ allprojects {
 
         maven {
             url "https://jitpack.io"
+
         }
     }
 }
