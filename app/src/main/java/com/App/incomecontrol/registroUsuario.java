@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -165,12 +166,10 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onResponse(String response) {
                 loading.dismiss();
-                Log.e("Respuesta", "Esta es la respuesta: "+ response);
+                Log.e("Respuesta de guardarBD", "Esta es la respuesta: "+response);
                 getIdUser();
-
             }
         }, new Response.ErrorListener() {
-
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -196,13 +195,24 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         request.add(stringRequest);
     }
 
+    private void iniciarTemporizador() {
+        final ProgressDialog loading = ProgressDialog.show(this, "Un momento...", "Estamos calculando su ubicación");
+        CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+
+            public void onFinish() {
+
+            }
+        }.start();
+    }
+
     private void getIdUser() {
 
-        String url="https://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 if(response.length()>0){
 
                     try {

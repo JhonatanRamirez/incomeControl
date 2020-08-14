@@ -107,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 if(response.length()>0){
                     try {
                         usuario= response.getJSONObject(0).get("correo").toString();
