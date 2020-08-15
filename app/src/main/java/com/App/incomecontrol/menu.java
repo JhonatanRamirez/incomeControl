@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,13 +32,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.App.incomecontrol.temporizador.MiContador;
 import com.App.incomecontrol.temporizador.animationCheckCancell;
+import com.bumptech.glide.Glide;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,11 +52,11 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
    private String id_user="";
    private LinearLayout linearQr;
    private ImageView imgPublicidad;
+    private ImageView linear_publi;
    private LottieAnimationView qr_animation;
    private Button btn_scan;
    private String id_local;
    private IntentIntegrator intentIntegrator;
-
    private StringRequest stringRequest;
     private JsonArrayRequest jsonArrayRequest;
    private RequestQueue request;
@@ -87,14 +85,22 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         imgPublicidad=findViewById(R.id.imgPublicidad);
         qr_animation=findViewById(R.id.animation_lottie_qr);
         btn_scan=findViewById(R.id.btn_scanQr);
+        linear_publi=findViewById(R.id.linear_publi);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.color_white));
         toolbar.setTitle("Escanear Codigo");
         setSupportActionBar(toolbar);
         codQr.setOnClickListener(this);
         qr_animation.setOnClickListener(this);
         btn_scan.setOnClickListener(this);
+        traerImagenurl();
         this.request= Volley.newRequestQueue(this);
 
+    }
+
+    private void traerImagenurl() {
+        Glide.with(this)
+                .load("https://app.dasscol.co/WebService/img/Ventura_express.jpeg")
+                .into(linear_publi);
     }
 
     @Override
@@ -137,13 +143,11 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if(result!=null){
             if(result.getContents()!=null){
                 resultQr=result.getContents();
                 traeridLocal();
-
             }else{
                 Toast.makeText(menu.this, "Error al escanear", Toast.LENGTH_LONG).show();
             }
@@ -155,7 +159,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
 
         Log.e(TAG, "traeridLocal: Qr: "+resultQr );
         Log.e("Entro", "Guardar en Bd");
-        String url="http://app.dasscol.com/WebService/modelo/getLocalId.php?id="+resultQr;
+        String url="https://app.dasscol.co/WebService/modelo/getLocalId.php?id="+resultQr;
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -172,20 +176,19 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                     animation.start();
                     Toast.makeText(getApplicationContext(), "EL local no existe", Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Volley Error",""+ error);
-                Toast.makeText(menu.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
+                Toast.makeText(menu.this, "No se puede conectar a la base de datos traeridLocal", Toast.LENGTH_LONG).show();
             }
         });
         request.add(jsonArrayRequest);
     }
 
     private void guardarBD() {
-        String url="http://app.dasscol.com/WebService/modelo/getEventId.php?id="+id_user;
+        String url="https://app.dasscol.co/WebService/modelo/getEventId.php?id="+id_user;
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -195,18 +198,8 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                     try {
                         String tipo=  response.getJSONObject(response.length()-1).get("tipo").toString();
                         String id_localActual=response.getJSONObject(response.length()-1).get("id_entradas").toString();
-                       if(tipo.equalsIgnoreCase("Entrada")){
-                           if(id_localActual.equalsIgnoreCase(id_local)){
-                               guardarBD2("Salida");
-                           }else{
-                               marcarSalida("Salida", id_localActual);
-                               final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_cancel, linear_qrchi);
-                               animation.start();
-                               Toast.makeText(menu.this, "Local salida no coincide con local de ingreso", Toast.LENGTH_LONG).show();
-                           }
-                       }else{
-                           guardarBD2("Entrada");
-                       }
+                        guardarBD2("Entrada");
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -219,7 +212,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("Volley Error",""+ error);
-                Toast.makeText(menu.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
+                Toast.makeText(menu.this, "No se puede conectar a la base de datos guardarBD", Toast.LENGTH_LONG).show();
             }
         });
         request.add(jsonArrayRequest);
@@ -227,19 +220,12 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void marcarSalida(String salida, final String id_localActual) {
-        String url="http://app.dasscol.com/WebService/modelo/setEvents.php?";
+        String url="https://app.dasscol.co/WebService/modelo/setEvents.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("response", ""+response);
-                Toast.makeText(menu.this, "Registro de "+"Salida"+" se realizo con exito", Toast.LENGTH_LONG).show();
-
-                    final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_check, linear_qrchi);
-                    animation.start();
-                loading.dismiss();
-
                 guardarBD2("Entrada");
             }
         }, new Response.ErrorListener() {
@@ -249,7 +235,6 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                 loading.dismiss();
             }
         }
-
         ){
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
@@ -261,6 +246,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                 parametros.put("tipo","Salida");
                 parametros.put("fecha",ts.toString());
                 parametros.put("acom",traerAcompanante());
+                Log.e(TAG, "getParams: time "+ts.toString() );
                 return parametros;
             }
         };
@@ -269,7 +255,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void guardarBD2(final String tipo2){
-         String url="http://app.dasscol.com/WebService/modelo/setEvents.php?";
+         String url="https://app.dasscol.co/WebService/modelo/setEvents.php?";
          final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
 
          this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -285,7 +271,6 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                      final animationCheckCancell animation = new animationCheckCancell(2000,1000,linear_check, linear_qrchi);
                      animation.start();
                  }
-
                  loading.dismiss();
              }
          }, new Response.ErrorListener() {
@@ -297,10 +282,8 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
          }
 
          ){
-
              @Override
              protected Map<String,String> getParams() throws AuthFailureError {
-
                  d = new Date();
                  ts = new Timestamp(d.getTime());
                  Map<String,String> parametros= new HashMap<>();
@@ -309,6 +292,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
                  parametros.put("tipo",tipo2);
                  parametros.put("fecha",ts.toString());
                  parametros.put("acom",traerAcompanante());
+                 Log.e(TAG, "getParams: time "+ts.toString() );
                  return parametros;
              }
          };
@@ -317,14 +301,11 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
      }
 
     private String traerAcompanante() {
-
     return "0";
-
     }
 
 
     private void borrarPreferencias(){
-
         SharedPreferences preferences= getSharedPreferences("datos_incomeControl", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor= preferences.edit();
         editor.clear();
@@ -339,7 +320,6 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
         finish();
     }
     private void traerIdUserPreference() {
-
         SharedPreferences preferencia=getSharedPreferences("datos_incomeControl", Context.MODE_PRIVATE);
         id_user= preferencia.getString("id","");
     }

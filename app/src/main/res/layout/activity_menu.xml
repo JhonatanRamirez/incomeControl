@@ -138,21 +138,21 @@
                 app:lottie_fileName="cancel_animation.json"
                 app:lottie_loop="false"
                 app:lottie_autoPlay="true"/>
-
         </LinearLayout>
-
-
     </LinearLayout>
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linear_publi"
-        android:orientation="vertical"
-        android:background="@drawable/p_ven"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linear_publi"
+            android:orientation="vertical"
+            android:scaleType="fitXY"
+            android:visibility="visible"/>
 
         <ImageView
             android:layout_width="30dp"
@@ -162,10 +162,8 @@
             android:visibility="gone"
             android:src="@drawable/close_whithe"
             android:layout_gravity="right"
+            />
 
-         />
+    </RelativeLayout>
 
-
-
-    </FrameLayout>
 </LinearLayout>

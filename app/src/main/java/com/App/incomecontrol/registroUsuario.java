@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,13 +58,11 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         clave=findViewById(R.id.txt_clave);
         claverep=findViewById(R.id.txt_claverep);
         this.request= Volley.newRequestQueue(this);
-
         registro.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
         if(v==registro){
             if(validarCampos()){
                 //Se debe hacer la validacion de que el correo no exista en la base de datos
@@ -72,7 +71,6 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
                 }else{
                     Toast.makeText(registroUsuario.this, "Email invalido, intente nuevamente.", Toast.LENGTH_LONG).show();
                 }
-
 
             }else{
                 Toast.makeText(registroUsuario.this, "Debe registrar todos los datos", Toast.LENGTH_LONG).show();
@@ -90,7 +88,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
 
     private void emailNoExiste() {
 
-        String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -98,15 +96,8 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
                 if(response.length()>0){
                     Toast.makeText(registroUsuario.this, "El correo ya se encuentra registrado en la base de datos.", Toast.LENGTH_LONG).show();
                 }else{
-                    if(clave.getText().toString().equals(claverep.getText().toString())){
-                        guardarBD();
-                    }else{
-                        Toast.makeText(registroUsuario.this, "Las claves no coinciden", Toast.LENGTH_LONG).show();
-                        clave.setText("");
-                        claverep.setText("");
-                        clave.setSelected(true);
-                    }
 
+                      getValiteCC();
                 }
 
             }
@@ -115,7 +106,6 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("Volley Error",""+ error);
-
                 Toast.makeText(registroUsuario.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
 
             }
@@ -123,6 +113,39 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         request.add(jsonArrayRequest);
 
 
+    }
+
+    private void getValiteCC() {
+        String url="https://app.dasscol.co/WebService/modelo/getUsuarioDocument.php?cc="+documento.getText().toString();
+        jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                if(response.length()>0){
+                    Toast.makeText(registroUsuario.this, "El documento ya se encuentra registrado en la base de datos.", Toast.LENGTH_LONG).show();
+                }else{
+                    if(clave.getText().toString().equals(claverep.getText().toString())){
+
+                        guardarBD();
+                    }else{
+                        Toast.makeText(registroUsuario.this, "Las claves no coinciden", Toast.LENGTH_LONG).show();
+                        clave.setText("");
+                        claverep.setText("");
+                        clave.setSelected(true);
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("Volley Error",""+ error);
+                Toast.makeText(registroUsuario.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
+
+            }
+        });
+        request.add(jsonArrayRequest);
     }
 
     private boolean validarCampos() {
@@ -133,23 +156,20 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
                     && !(documento.getText().toString().equalsIgnoreCase(""))
                         &&!(clave.getText().toString().equalsIgnoreCase("")));
 
-
     }
 
     private void guardarBD() {
-        String url="http://app.dasscol.com/WebService/modelo/setUsuario.php?";
+        String url="https://app.dasscol.co/WebService/modelo/setUsuario.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Registrando Persona...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 loading.dismiss();
-                Log.e("Respuesta", "Esta es la respuesta: "+ response);
+                Log.e("Respuesta de guardarBD", "Esta es la respuesta: "+response);
                 getIdUser();
-
             }
         }, new Response.ErrorListener() {
-
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -159,7 +179,6 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         }
 
         ){
-
             @Override
             protected Map<String,String> getParams() throws AuthFailureError {
 
@@ -176,13 +195,24 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
         request.add(stringRequest);
     }
 
+    private void iniciarTemporizador() {
+        final ProgressDialog loading = ProgressDialog.show(this, "Un momento...", "Estamos calculando su ubicación");
+        CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+
+            public void onFinish() {
+
+            }
+        }.start();
+    }
+
     private void getIdUser() {
 
-        String url="http://app.dasscol.com/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 if(response.length()>0){
 
                     try {

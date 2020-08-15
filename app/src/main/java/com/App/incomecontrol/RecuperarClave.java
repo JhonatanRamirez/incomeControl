@@ -8,10 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,10 +18,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -43,7 +39,6 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
         btn_siguiente=findViewById(R.id.btn_siguiente);
         btn_siguiente.setOnClickListener(this);
         request= Volley.newRequestQueue(this);
-
     }
 
     @Override
@@ -55,7 +50,6 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
             }else{
                 Toast.makeText(RecuperarClave.this, "Email invalido, intente nuevamente.", Toast.LENGTH_LONG).show();
             }
-
         }
     }
 
@@ -68,7 +62,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
 
     private void consultarCorreo() {
 
-        String url="http://app.dasscol.com/WebService/modelo/getUsuario_correo.php?correo="+txt_correo.getText().toString();
+        String url="https://app.dasscol.co/WebService/modelo/getUsuario_correo.php?correo="+txt_correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -89,9 +83,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
                 Log.e("Volley Error",""+ error);
-
                 Toast.makeText(RecuperarClave.this, "No se puede conectar a la base de datos", Toast.LENGTH_LONG).show();
 
             }
@@ -102,7 +94,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
     private void enviarEmail(final JSONArray response2) {
 
 
-        String url="http://app.dasscol.com/WebService/modelo/sendEmail.php?";
+        String url="https://app.dasscol.co/WebService/modelo/sendEmail.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Un momento...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -138,10 +130,10 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
 
                 String email, asunto, mensaje;
                 email= RecuperarClave.this.txt_correo.getText().toString();
-                asunto= "Hola, su clave para inicicar al App AccesControl es: ";
+                asunto= "Recuperacion de contraseña VenturaApp";
                 mensaje="";
                 try {
-                    mensaje= "Su clave para iniciar sesion es: "+response2.getJSONObject(0).get("clave").toString();
+                    mensaje= "Hola, gracias por utilizar VenturaApp. Puedes iniciar sesión utilizando la siguiente contraseña: "+response2.getJSONObject(0).get("clave").toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
