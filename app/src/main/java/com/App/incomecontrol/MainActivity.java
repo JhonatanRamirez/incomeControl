@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void traerUsuario() {
-        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getUsuarioEmail.php?correo="+user.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

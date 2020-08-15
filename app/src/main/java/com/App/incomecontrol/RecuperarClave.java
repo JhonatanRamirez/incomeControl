@@ -62,7 +62,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
 
     private void consultarCorreo() {
 
-        String url="https://app.dasscol.co/WebService/modelo/getUsuario_correo.php?correo="+txt_correo.getText().toString();
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getUsuario_correo.php?correo="+txt_correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -94,7 +94,7 @@ public class RecuperarClave extends AppCompatActivity implements View.OnClickLis
     private void enviarEmail(final JSONArray response2) {
 
 
-        String url="https://app.dasscol.co/WebService/modelo/sendEmail.php?";
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/sendEmail.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Un momento...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

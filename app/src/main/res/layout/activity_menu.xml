@@ -78,7 +78,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:lottie_imageAssetsFolder="assets"
-                app:lottie_fileName="qr-code.json"
+                app:lottie_fileName="qr.json"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"/>
 

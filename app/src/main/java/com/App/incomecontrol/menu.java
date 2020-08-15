@@ -99,7 +99,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
 
     private void traerImagenurl() {
         Glide.with(this)
-                .load("https://app.dasscol.co/WebService/img/Ventura_express.jpeg")
+                .load("https://www.comprasinteligentes.co/app.ventura/WebService/img/Ventura_express.jpeg")
                 .into(linear_publi);
     }
 
@@ -159,7 +159,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
 
         Log.e(TAG, "traeridLocal: Qr: "+resultQr );
         Log.e("Entro", "Guardar en Bd");
-        String url="https://app.dasscol.co/WebService/modelo/getLocalId.php?id="+resultQr;
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getLocalId.php?id="+resultQr;
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -188,7 +188,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void guardarBD() {
-        String url="https://app.dasscol.co/WebService/modelo/getEventId.php?id="+id_user;
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getEventId.php?id="+id_user;
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -220,7 +220,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void marcarSalida(String salida, final String id_localActual) {
-        String url="https://app.dasscol.co/WebService/modelo/setEvents.php?";
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/setEvents.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -255,7 +255,7 @@ public class menu extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void guardarBD2(final String tipo2){
-         String url="https://app.dasscol.co/WebService/modelo/setEvents.php?";
+         String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/setEvents.php?";
          final ProgressDialog loading = ProgressDialog.show(this, "Registrando entrada...", "Espere por favor");
 
          this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

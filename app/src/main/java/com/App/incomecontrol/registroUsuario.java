@@ -88,7 +88,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
 
     private void emailNoExiste() {
 
-        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -116,7 +116,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
     }
 
     private void getValiteCC() {
-        String url="https://app.dasscol.co/WebService/modelo/getUsuarioDocument.php?cc="+documento.getText().toString();
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getUsuarioDocument.php?cc="+documento.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -159,7 +159,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
     }
 
     private void guardarBD() {
-        String url="https://app.dasscol.co/WebService/modelo/setUsuario.php?";
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/setUsuario.php?";
         final ProgressDialog loading = ProgressDialog.show(this, "Registrando Persona...", "Espere por favor");
 
         this.stringRequest= new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -209,7 +209,7 @@ public class registroUsuario extends AppCompatActivity implements View.OnClickLi
 
     private void getIdUser() {
 
-        String url="https://app.dasscol.co/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
+        String url="https://www.comprasinteligentes.co/app.ventura/WebService/modelo/getUsuarioEmail.php?correo="+correo.getText().toString();
         jsonArrayRequest= new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
